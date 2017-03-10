@@ -1,9 +1,10 @@
 var express = require('express')
 var path = require('path')
-var favicon = require('serve-favicon')
+// var favicon = require('serve-favicon')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
+const restc = require('restc')
 
 var index = require('./routes/index')
 var users = require('./routes/users')
@@ -21,10 +22,20 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(restc.express())
+
+app.all('*', function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  res.header('Access-Control-Allow-Credentials', 'true')
+  next()
+})
 
 app.use('/', index)
 app.use('/users', users)
 app.use('/songs', songs)
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
