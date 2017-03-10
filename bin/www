@@ -87,4 +87,5 @@ function onListening () {
     ? 'pipe ' + addr
     : 'port ' + addr.port
   debug('Listening on ' + bind)
+  console.log('http://localhost:3000/songs?keyword=%E5%91%A8%E6%9D%B0%E4%BC%A6&page=1&num=5')
 }
